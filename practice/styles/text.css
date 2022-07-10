@@ -1,0 +1,60 @@
+p {
+    font-family: Roboto;
+    max-width: 400px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 25px;
+    margin-bottom: 10px;
+}
+
+.stats {
+    font-size: 15px;
+    color: rgb(80, 80, 80);
+    margin-bottom: 20px;
+}
+
+.name {
+    font-size: 15px;
+    color: rgb(80, 80, 80);
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 15px;
+    color: rgb(80, 80, 80);
+    line-height: 20px;
+    text-align: justify;
+}
+
+.message {
+    font-size: 25px;
+    margin-top: 50px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.example {
+    color: yellow;
+    transition: font-size 2s;
+}
+
+.example:hover {
+    font-size: 80px;
+    text-decoration: underline;
+}
+
+.happy {
+    font-size: 40px;
+}
+
+.happy:hover {
+    opacity: 0.1;
+}

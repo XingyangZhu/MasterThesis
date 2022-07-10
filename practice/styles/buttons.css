@@ -1,0 +1,77 @@
+/* class for subscribe button */
+.subscribe-button {
+    background-color: rgb(201, 0, 0);
+    color: white;
+    border: none;
+    /* height: 36px;    Better to use padding instead of fixed size! */
+    /* width: 105px;    Better to use padding instead of fixed size! */
+    border-radius: 2px;
+    font-weight: bold;
+    cursor: pointer;
+    /* transition in main class, so it applies after not hovering anymore */
+    transition: opacity 0.5s;
+    /* padding adds space on the inside */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+    /* margin adds space on the outside */
+    margin-right: 8px;
+    margin-left: 20px;
+    /* default aligns text, set to align top here */
+    vertical-align: top
+}
+
+/* pseudo class that applies to subscribe button on hover */
+.subscribe-button:hover {
+    opacity: 0.6;
+}
+
+/* pseudo class that applies to subscribe button on click */
+.subscribe-button:active {
+    opacity: 0.3;
+}
+
+/* class of join button */
+.join-button {
+    background-color: white;
+    border-color: blue;
+    border-style: solid;
+    border-width: 1px;
+    color: blue;
+    height: 36px;
+    width: 62px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity 0.5s, color 0.5s;
+}
+
+.join-button:hover {
+    background-color: blue;
+    color: white;
+}
+
+.join-button:active {
+    opacity: 0.7;
+}
+
+/* class of tweet button */
+.tweet-button {
+    background-color: rgb(77, 77, 255);
+    color: white;
+    border: none;
+    border-radius: 18px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: box-shadow 0.5s;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.tweet-button:hover {
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
