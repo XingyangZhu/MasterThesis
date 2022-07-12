@@ -8,5 +8,8 @@
 
 .intro-area {
     background-color: var(--background-color);
-    border-right: var(--header-border) solid  var(--header-border-color);
+}
+
+.chat-area {
+    background-color: var(--background-color);
 }

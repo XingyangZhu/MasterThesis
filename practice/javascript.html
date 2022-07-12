@@ -45,6 +45,22 @@
                 render();
             }
 
+
+
+            // Class to know which user wrote what message.
+            class ChatMessage {
+                constructor(person, text) {
+                    this.person = person;
+                    this.text   = text;
+                }
+            };
+
+            let test = new ChatMessage('user', 'Hello.');
+
+            let element = document.createElement('div');
+            element.innerText = 'Hello';
+            document.body.appendChild(element);
+
         </script>
     </body>
 </html>

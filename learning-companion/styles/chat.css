@@ -3,7 +3,7 @@
     display: grid;
     grid-template-rows: 100px 1fr auto;
 
-    background-color: var(--chat-secondary-color);
+    background-color: var(--chat-margin-color);
 
     border: var(--chat-border) solid var(--chat-border-color);
     border-radius: var(--chat-border-radius);
@@ -15,25 +15,27 @@
 /* ################# */
 
 .chat-header {
-    background-color: var(--chat-primary-color);
-    padding: var(--chat-margin);
+    background-color: var(--chat-header-background-color);
+    color: var(--chat-header-color);
+    
+    padding-top: var(--chat-padding);
+    padding-bottom: var(--chat-padding);
 
     display: flex;
     justify-content: left;
     align-items: center;
     border-top-left-radius: var(--chat-border-radius);
     border-top-right-radius: var(--chat-border-radius);
-    border-bottom: var(--chat-border) solid var(--chat-border-color);
 }
 
 .chat-header img {
     background-color: white;
     height: 100%;
+    margin-left: var(--chat-margin);
     margin-right: var(--chat-margin);
 
     border-radius: 50%;
     border: var(--chat-border) solid var(--chat-border-color);
-
 }
 
 .teacher-name {
@@ -44,20 +46,69 @@
 .teacher-online-status {
     font-size: 12px;
     margin-top: 2px;
-    color: rgb(56, 56, 56);
 }
 
 /* ####################### */
 /* ## chat conversation ## */
 /* ####################### */
 
-.chat-conversation {
-    background-color: white;
-    margin: var(--chat-margin);
-    padding: var(--chat-margin);
+#chat-conversation {
+    background-color: var(--chat-background-color);
+    margin-bottom: var(--chat-margin);
+    margin-left: var(--chat-margin);
+    margin-right: var(--chat-margin);
+    padding: var(--chat-padding);
 
     border-radius: var(--chat-border-radius);
     border: var(--chat-border) solid var(--chat-border-color);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.user-message {
+    background-color: var(--message-background-color-user);
+    color: var(--message-color);
+
+    max-width: 55%;
+    margin-top: var(--message-distance);
+    padding: var(--message-padding);
+    align-self: flex-end;
+
+    font-size: var(--message-font-size);
+
+    border-top-left-radius: var(--chat-border-radius);
+    border-bottom-right-radius: var(--chat-border-radius);
+    border-bottom-left-radius: var(--chat-border-radius);
+
+}
+
+.teacher-message {
+    background-color: var(--message-background-color-teacher);
+    color: var(--message-color);
+
+    max-width: 55%;
+    margin-top: var(--message-distance);
+    padding: var(--message-padding);
+    align-self: flex-start;
+
+    font-size: var(--message-font-size);
+
+    border-top-right-radius: var(--chat-border-radius);
+    border-bottom-right-radius: var(--chat-border-radius);
+    border-bottom-left-radius: var(--chat-border-radius);
+}
+
+.answer-selection {
+    display: flex;
+    margin-top: var(--message-distance);
+    column-gap: var(--message-distance);
+}
+
+.answer-selection button {
+    padding: var(--message-padding);
+    flex: 1;
 }
 
 /* ################ */
@@ -69,13 +120,15 @@
     justify-content: center;
     align-items: center;
 
-    padding-left: var(--chat-margin);
-    padding-right: var(--chat-margin);
-    padding-bottom: var(--chat-margin);
+    margin-left: var(--chat-margin);
+    margin-right: var(--chat-margin);
+    margin-bottom: var(--chat-margin);
 }
 
 .chat-input input {
     margin-right: var(--chat-margin);
+    font-size: var(--message-font-size);
+    padding-left: 10px;
     flex: 1;
     height: 42px;
 
@@ -83,18 +136,9 @@
     border: var(--chat-border) solid var(--chat-border-color);
 }
 
-.chat-input input::placeholder {
-    font-size: 16px;
-    padding-left: 10px;
-}
-
 .chat-input button {
     width: 100px;
     height: 50px;
 
-    border-radius: var(--chat-border-radius);
-    border: var(--chat-border) solid var(--chat-border-color);
-
     font-weight: bold;
-    font-size: 16px;
 }
