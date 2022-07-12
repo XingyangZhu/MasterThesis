@@ -1,14 +1,24 @@
 :root {
+    /* global variables */
+    --background-color: rgb(255, 255, 255);
+
+    /* header variables */
     --header-height: 75px;
     --header-border: 1px;
     --header-border-color: lightgray;
 
-    --background-color: rgb(255, 255, 255);
+
+    /* chat variables */
+    --chat-primary-color: rgba(126, 255, 126, 0.795);
+    --chat-secondary-color: rgb(206, 206, 206);
+    --chat-border-color: rgb(141, 141, 141);
 
     --chat-margin: 20px;
-    --chat-border: 5px;
+    --chat-padding: 20px;
 
-    --chat-color: rgb(230, 230, 230);
+    --chat-border: 2px;
+    --chat-border-radius: 10px;
+
 
 }
 
