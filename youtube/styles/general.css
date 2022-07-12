@@ -1,0 +1,22 @@
+/* ####################### */
+/* ## general css rules ## */
+/* ####################### */
+
+body {
+    height: 3000px;
+    /* remove default margin */
+    margin: 0;
+    /* add space for header at top */
+    padding-top: 80px;
+    /* add space for sidebar on the left */
+    padding-left: 96px;
+
+    padding-right: 24px;
+    background-color: rgb(248, 248, 248);
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 0;
+    margin-bottom: 0;
+}

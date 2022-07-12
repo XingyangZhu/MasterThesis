@@ -1,0 +1,22 @@
+:root {
+    --header-height: 75px;
+    --header-border: 1px;
+    --header-border-color: lightgray;
+
+    --background-color: rgb(255, 255, 255);
+
+    --chat-margin: 20px;
+    --chat-border: 5px;
+
+    --chat-color: rgb(230, 230, 230);
+
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+    text-align: justify;
+}

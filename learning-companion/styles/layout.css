@@ -1,0 +1,12 @@
+.grid-container {
+    /* fill the whole page */
+    height: calc(100vh - var(--header-height) - var(--header-border));
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.intro-area {
+    background-color: var(--background-color);
+    border-right: var(--header-border) solid  var(--header-border-color);
+}

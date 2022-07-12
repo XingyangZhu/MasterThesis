@@ -1,0 +1,84 @@
+.chat-container {
+    height: calc(100vh - var(--header-height) - var(--header-border) - 2*var(--chat-margin) - 2*var(--chat-border));
+    display: grid;
+    grid-template-rows: 100px 1fr 75px;
+
+    background-color: var(--chat-color);
+
+    border: var(--chat-border) solid green;
+    border-radius: 5px;
+    margin: var(--chat-margin);
+}
+
+/* ################# */
+/* ## chat header ## */
+/* ################# */
+
+.chat-header {
+    background-color: lightgreen;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.chat-header img {
+    background-color: white;
+    height: 80%;
+    border-radius: 50%;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.teacher-name {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.teacher-online-status {
+    font-size: 12px;
+    margin-top: 5px;
+    color: rgb(56, 56, 56);
+}
+
+/* ####################### */
+/* ## chat conversation ## */
+/* ####################### */
+
+.chat-conversation {
+    margin-top: var(--chat-margin);
+    margin-left: var(--chat-margin);
+    margin-right: var(--chat-margin);
+    background-color: white;
+}
+
+/* ################ */
+/* ## chat input ## */
+/* ################ */
+
+.chat-input {
+    background-color: var(--chat-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-input input {
+    flex: 1;
+    height: 44px;
+    margin-left: var(--chat-margin);
+    border-radius: 44px;
+    border-style: solid;
+}
+
+.chat-input input::placeholder {
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.chat-input button {
+    width: 100px;
+    height: 50px;
+    margin-right: var(--chat-margin);
+    margin-left: var(--chat-margin);
+}
