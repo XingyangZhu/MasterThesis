@@ -1,0 +1,18 @@
+.header {
+    height: var(--header-height);
+    background-color: var(--header-color);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: var(--header-border) solid var(--header-border-color);
+}
+
+.header h1 {
+    padding-left: 0.5em;
+}
+
+.header img {
+    height: 100%;
+}
