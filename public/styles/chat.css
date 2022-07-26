@@ -63,8 +63,8 @@
     border: var(--chat-border) solid var(--chat-border-color);
 
     display: flex;
-    flex-direction: column;
-    justify-content: end;
+    flex-direction: column-reverse;
+    overflow: auto; /* Overflow does not work with justify-center: end; */
 }
 
 .user-message {
@@ -81,7 +81,6 @@
     border-top-left-radius: var(--chat-border-radius);
     border-bottom-right-radius: var(--chat-border-radius);
     border-bottom-left-radius: var(--chat-border-radius);
-
 }
 
 .teacher-message {
@@ -98,6 +97,10 @@
     border-top-right-radius: var(--chat-border-radius);
     border-bottom-right-radius: var(--chat-border-radius);
     border-bottom-left-radius: var(--chat-border-radius);
+}
+
+.teacher-message img {
+    max-width: 100%;
 }
 
 .answer-selection {

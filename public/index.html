@@ -80,6 +80,12 @@
 
                     <!-- messages have to be filled using javascript -->
                     <div id="chat-conversation">
+                        <div class="answer-selection">
+                            <button id="start-button" class="answer-button" onclick="sendMessageFromButton();">Hallo</button>
+                        </div>
+                    </div>
+
+                    <!-- <div id="chat-conversation">
                         <div class="user-message">
                             Hallo.
                         </div>
@@ -103,6 +109,10 @@
 
                         <div class="teacher-message">
                             Guten Tag. Ich bin Prof. Dr. Wang.
+                        </div>
+
+                        <div class="teacher-message">
+                            <img src="https://image.gala.de/21785740/t/R5/v9/w960/r1.5/-/stier.jpg" alt="institute-logo">
                         </div>
 
                         <div class="answer-selection">
@@ -126,25 +136,25 @@
                         </div>
 
                         <div class="answer-selection">
-                            <button>
+                            <button class="answer-button">
                                 Answer 1
                             </button>
-                            <button>
+                            <button class="answer-button">
                                 Answer 2
                             </button>
-                            <button>
+                            <button class="answer-button">
                                 Answer 3
                             </button>
-                            <button>
+                            <button class="answer-button">
                                 Answer 4
                             </button>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- input -->
                     <div class="chat-input">
                         <input id="chat-input" type="text" placeholder="Hier können Sie tippen">
-                        <button id="chat-button" onclick="sendMessage();">
+                        <button id="chat-button" onclick="sendMessageFromInput();">
                             Senden
                         </button>
                     </div>
@@ -163,18 +173,48 @@
             // Generate random user id for each user. (Current time in seconds)
             const userId = ( new Date().getTime() ).toString();
 
-            // Class to know which user wrote what message.
-            class ChatObject {
-                constructor(user, text) {
-                    this.user = user;
-                    this.text = text;
-                }
-            }
-
             // Container for all messages.
             let messages = [];
 
-            async function sendMessage()
+            // Data class to know which user wrote what message.
+            class ChatObject {
+                constructor(user, text, buttons=[]) {
+                    this.user = user;
+                    this.text = text;
+                    this.buttons = buttons;
+                }
+            }
+
+            async function sendMessageFromButton()
+            {
+                // Get clicked button id.
+                const buttonId = event.target.id;
+                // Get button element.
+                const button = document.getElementById(buttonId);
+                // Get button text.
+                const buttonText = button.innerHTML;
+
+                // Create new ChatObject with given input text.
+                message = new ChatObject('person', buttonText);
+                // Add message to messages array.
+                messages.unshift(message);
+
+
+                // Update chat conversation with new message.
+                render();
+
+
+                // Send message to dialogflow and get response.
+                let answer = await getResponse(message);
+                // Add answer to messages array.
+                messages.unshift(answer);
+
+
+                // Update chat conversation with new response.
+                render();
+            }
+
+            async function sendMessageFromInput()
             {
                 // Get chat input element.
                 let input = document.getElementById('chat-input');
@@ -187,7 +227,7 @@
                     return;
                 }
                 // Add message to messages array.
-                messages.push(message);
+                messages.unshift(message);
                 // Clean up input field text.
                 input.value = "";
 
@@ -199,7 +239,7 @@
                 // Send message to dialogflow and get response.
                 let answer = await getResponse(message);
                 // Add answer to messages array.
-                messages.push(answer);
+                messages.unshift(answer);
 
 
                 // Update chat conversation with new response.
@@ -222,12 +262,12 @@
                 // Send message to node js backend server that forwards the request to dialogflow.
                 const response = await fetch('/text_query', options);
                 // Unwrap response into json format.
-                const data     = await response.json();
+                const data = await response.json();
 
                 // console.log("Client", data);
 
                 // Create answer.
-                let answer = new ChatObject('teacher', data.fulfillmentText);
+                let answer = new ChatObject('teacher', data.message, data.buttons);
                 // Return the answer.
                 return answer;
             }
@@ -239,23 +279,90 @@
                 conversation.innerHTML = "";
                 // Create an element for all elements in messages array.
                 messages.forEach(
-                    function (object) {
-                        // Create new div element for each message.
-                        let element = document.createElement('div');
-                        // Set text of message.
-                        element.innerText = object.text;
-                        // Set class depending on which user.
-                        if (object.user == 'person') {
-                            element.className = 'user-message';
-                        }
-                        else {
-                            element.className = 'teacher-message';
-                        }
-                        // Append element to conversation.
-                        conversation.appendChild(element);
+                    function (chatObject, chatObjectIndex) {
+                        // Add buttons to chat. (If they exist)
+                        addChatButtons(conversation, chatObject, chatObjectIndex);
+
+                        // Add message to chat.
+                        addChatMessage(conversation, chatObject);
                     }
                 )
             }
+
+            function addChatButtons(conversation, chatObject, chatObjectIndex) {
+                // Check if buttons exist.
+                if (chatObject.buttons.length > 0) {
+                    // Create new button container element.
+                    let buttonContainer = document.createElement('div');
+                    // Set element class.
+                    buttonContainer.className = 'answer-selection';
+
+                    // Fill container with buttons.
+                    chatObject.buttons.forEach(
+                        function (buttonText, buttonIndex) {
+                            // Only newest buttons?
+                            if (chatObjectIndex == 0) {
+                                // Create new button element.
+                                let button = document.createElement('button');
+                                // Set button text.
+                                button.innerHTML = buttonText;
+                                // Set button class.
+                                button.className = 'answer-button';
+                                // Set button id.
+                                button.id = chatObject.text + buttonText; // TODO: Proper id?
+                                // Set onClick method.
+                                button.addEventListener("click", sendMessageFromButton);
+                                // Deactivate buttons for old messages. (Message 0 is most recent message from dialogflow)
+                                if (chatObjectIndex != 0) {
+                                    button.disabled = true;
+                                }
+                                // Append button to button container.
+                                buttonContainer.appendChild(button);
+
+                                // Check if more than 6 buttons.
+                                if (buttonIndex == 5 && chatObject.buttons.length > 6) {
+                                    // Append container and create a new one.
+                                    conversation.appendChild(buttonContainer);
+                                    buttonContainer = document.createElement('div');
+                                    buttonContainer.className = 'answer-selection';
+                                }
+                            }
+                        }
+                    );
+
+                    // Append button container element to conversation.
+                    conversation.appendChild(buttonContainer);
+                }
+            }
+
+            function addChatMessage(conversation, chatObject) {
+                // Create new div element for each message.
+                let element = document.createElement('div');
+                // Set text of message.
+                element.innerText = chatObject.text;
+                // Set class depending on which user.
+                if (chatObject.user == 'person') {
+                    element.className = 'user-message';
+                }
+                else {
+                    element.className = 'teacher-message';
+                }
+                // Append element to conversation.
+                conversation.appendChild(element);
+            }
+
+            // Add event listener to input field.
+            let chatInput = document.getElementById('chat-input');
+            // Execute a function when the user presses a key on the keyboard
+            chatInput.addEventListener("keypress", function(event) {
+                // If the user presses the "Enter" key on the keyboard
+                if (event.key === "Enter") {
+                    // Cancel the default action, if needed
+                    event.preventDefault();
+                    // Trigger the button element with a click
+                    document.getElementById("chat-button").click();
+                }
+            });
 
         </script>
 

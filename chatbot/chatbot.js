@@ -1,13 +1,12 @@
 const dialogflow = require('dialogflow');   // Load dialogflow API
-const config = require('./devkey'); // Load google service account
+const config     = require('./devkey');     // Load google service account
 
-const privateKey = config.googlePrivateKey;
 const projectId = config.googleProjectId;
 const sessionId = config.dialogFlowSessionId;
 
 const credentials = {
     client_email: config.googleClientEmail,
-    private_key: config.googlePrivateKey
+    private_key:  config.googlePrivateKey
 };
 
 const sessionClient = new dialogflow.SessionsClient({projectId, credentials});
