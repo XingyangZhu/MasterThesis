@@ -1,25 +1,26 @@
 const dialogflow = require('dialogflow');   // Load dialogflow API
 const config     = require('./devkey');     // Load google service account
 
+// Load google service account data.
 const projectId = config.googleProjectId;
-const sessionId = config.dialogFlowSessionId;
-
 const credentials = {
-    client_email: config.googleClientEmail,
-    private_key:  config.googlePrivateKey
+    private_key:  config.googlePrivateKey,
+    client_email: config.googleClientEmail
 };
 
+// Setup session client to connect with dialogflow.
 const sessionClient = new dialogflow.SessionsClient({projectId, credentials});
 
-const textQuery = async(userText, userId)=>{
+// Handle text query request with dialogflow.
+const textQuery = async(userText, userSessionId)=>{
     // Connect with dialogflow api
-    const sessionPath = sessionClient.sessionPath(projectId, sessionId+userId);
+    const sessionPath = sessionClient.sessionPath(projectId, userSessionId);
     const request = {
         session: sessionPath,
         queryInput: {
             text: {
                 text: userText,
-                languageCode: config.dialogFlowSessionLanguageCode
+                languageCode: 'de-DE'
             }
         }
     };
