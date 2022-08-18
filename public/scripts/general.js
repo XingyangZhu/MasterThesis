@@ -163,6 +163,9 @@ function addChatMessage(conversation, chatObject) {
     let element = document.createElement('div');
     // Set text of message.
     element.innerText = chatObject.text;
+    // Remove HTMl tags (If exist)
+    element.innerText = element.innerText.replace("<strong>" , "");
+    element.innerText = element.innerText.replace("</strong>", "");
     // Set class depending on which user.
     if (chatObject.user == 'person') {
         element.className = 'user-message';

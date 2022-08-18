@@ -137,7 +137,7 @@ function createResultObject(resultQuery) {
                 // Remove "EXTRA_MSG:" from text.
                 text = text.replace("EXTRA_MSG:", "");
                 // Append text to extraMessages array.
-                extraMessages.push(text);
+                extraMessages.unshift(text);
             }
             // If no match, then it is a button.
             else {
