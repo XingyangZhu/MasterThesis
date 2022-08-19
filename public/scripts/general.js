@@ -42,9 +42,22 @@ async function sendMessageFromButton()
     messages.unshift(answer);
 
 
-    // Update chat conversation with new response.
-    const timeout = Math.min(answer.text.length * 2, 2000);
+    // Draw answer message
+    let timeout = 500;
+    setTimeout(render, timeout, true, 0);
     console.log(timeout.toString());
+
+    // Draw extra messages step by step.
+    numExtraMsgs = answer.extraMessages.length;
+    // Start render timeouts.
+    for (let i = 0; i < numExtraMsgs; i++) {
+        // Update chat conversation with new response.
+        timeout = timeout + 500 + Math.min(answer.extraMessages[numExtraMsgs-i-1].length * 3, 2000);
+        setTimeout(render, timeout, true, i+1);
+        console.log(timeout.toString());
+    }
+
+    // Remove loading animation and draw everything.
     setTimeout(render, timeout);
 }
 
@@ -80,7 +93,7 @@ async function sendMessageFromInput()
     render();
 }
 
-function render(typing=false) {
+function render(typing=false, extraMsgMaxIndex=100) {
     // Get current chat conversation element.
     let conversation = document.getElementById('chat-conversation');
     // Reset all messages currently displayed.
@@ -94,11 +107,13 @@ function render(typing=false) {
     // Create an element for all elements in messages array.
     messages.forEach(
         function (chatObject, chatObjectIndex) {
-            // Add buttons to chat. (If they exist)
-            addChatButtons(conversation, chatObject, chatObjectIndex);
+            if (!typing) {
+                // Add buttons to chat. (If they exist)
+                addChatButtons(conversation, chatObject, chatObjectIndex);
+            }
 
             // Add extra messages to chat. (If they exist)
-            addChatExtraMessage(conversation, chatObject);
+            addChatExtraMessage(conversation, chatObject, extraMsgMaxIndex, chatObjectIndex);
 
             // Add links to chat. (If they exist)
             addChatLink(conversation, chatObject);
@@ -129,8 +144,10 @@ function addChatButtons(conversation, chatObject, chatObjectIndex) {
                     let button = document.createElement('button');
                     // Set button text.
                     button.innerHTML = buttonText;
-                    // Set button class.
-                    button.className = 'answer-button';
+                    // Set button class for continue buttons.
+                    if (buttonText.includes("Weiter")) {
+                        button.className = 'button-continue';
+                    }
                     // Set button id.
                     button.id = chatObject.text + buttonText; // TODO: Proper id?
                     // Set onClick method.
@@ -163,9 +180,6 @@ function addChatMessage(conversation, chatObject) {
     let element = document.createElement('div');
     // Set text of message.
     element.innerText = chatObject.text;
-    // Remove HTMl tags (If exist)
-    element.innerText = element.innerText.replace("<strong>" , "");
-    element.innerText = element.innerText.replace("</strong>", "");
     // Set class depending on which user.
     if (chatObject.user == 'person') {
         element.className = 'user-message';
@@ -231,22 +245,64 @@ function addChatLink(conversation, chatObject) {
     }
 }
 
-function addChatExtraMessage(conversation, chatObject) {
-    // Check if links exist.
+function addChatExtraMessage(conversation, chatObject, extraMsgMaxIndex, chatObjectIndex) {
+    // Check if extra messages exist.
     if (chatObject.extraMessages.length > 0) {
-        // Fill container with links.
-        chatObject.extraMessages.forEach(
-            function (extraMsg) {
-                // Create new div container element.
-                let msgContainer = document.createElement('div');
-                // Set element class.
-                msgContainer.className = 'teacher-message';
-                // Set text of message.
-                msgContainer.innerText = extraMsg;
-                // Append msgContainer to conversation.
-                conversation.appendChild(msgContainer);
-            }
-        );
+        // Special case for newest answer. (Draw in reverse)
+        if (chatObjectIndex == 0) {
+            // // How many extra messages?
+            // numExtraMessages = chatObject.extraMessages.length;
+            // console.log("Extra messages: " + numExtraMessages.toString());
+            // // Fill container (start from end)
+            // // for (let i = numExtraMessages-1; i >= 0; i--) {
+            // for (let i = 0; i < numExtraMessages; i++) {
+
+            //     console.log("i: " + i.toString());
+
+            //     // Create new div container element.
+            //     let msgContainer = document.createElement('div');
+            //     // Set element class.
+            //     msgContainer.className = 'teacher-message';
+            //     // Set text of message.
+            //     msgContainer.innerText = chatObject.extraMessages[i];
+            //     // Append msgContainer to conversation.
+            //     conversation.appendChild(msgContainer);
+                
+            // }
+            chatObject.extraMessages.forEach(
+                function (extraMsg, extraMsgIndex) {
+                    // Check how many extra messages exist.
+                    let numExtraMessages = chatObject.extraMessages.length;
+                    // Draw only index up to max desired index.
+                    if (extraMsgIndex > numExtraMessages - 1 - extraMsgMaxIndex) {
+                        // Create new div container element.
+                        let msgContainer = document.createElement('div');
+                        // Set element class.
+                        msgContainer.className = 'teacher-message';
+                        // Set text of message.
+                        msgContainer.innerText = extraMsg;
+                        // Append msgContainer to conversation.
+                        conversation.appendChild(msgContainer);
+                    }
+                }
+            );
+        }
+        // Other messages --> Draw all instantly
+        else {
+            // Fill container with links.
+            chatObject.extraMessages.forEach(
+                function (extraMsg) {
+                    // Create new div container element.
+                    let msgContainer = document.createElement('div');
+                    // Set element class.
+                    msgContainer.className = 'teacher-message';
+                    // Set text of message.
+                    msgContainer.innerText = extraMsg;
+                    // Append msgContainer to conversation.
+                    conversation.appendChild(msgContainer);
+                }
+            );
+        }
     }
 }
 

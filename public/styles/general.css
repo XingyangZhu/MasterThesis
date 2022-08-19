@@ -34,6 +34,7 @@
     --button-background-color: #DAF1F8;
     --button-background-color-hover: #AFD8E6;
     --button-background-color-active: #7DB6C8;
+    --button-background-continue-color: #aee0ef;
 }
 
 body {
@@ -62,4 +63,8 @@ button:hover {
 
 button:active {
     background-color: var(--button-background-color-active);
+}
+
+.button-continue {
+    background-color: var(--button-background-continue-color);
 }
