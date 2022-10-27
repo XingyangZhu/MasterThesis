@@ -18,6 +18,12 @@ Dies ist das Repository für die Masterarbeit von Xingyang Zhu mit dem dem Titel
     </img>
 </div>
 
+## Konfiguration
+
+1. Für jeden Learning-Companion in Google Cloude Services einen Service Account erstellen.
+2. Service Account exportieren.
+3. **googleProjectId**, **googlePrivateKey** und **googleClientEmail** in devkey.js für beide Learning-Companions eintragen, um die Kommunikation mit Dialogflow über den Web-Server zu erlauben.
+
 ## Starten
 
 ### Horuko App
