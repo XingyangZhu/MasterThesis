@@ -26,9 +26,9 @@ Dies ist das Repository für die Masterarbeit von Xingyang Zhu mit dem dem Titel
 
 ## Starten
 
-### Herokua App
+### Heroku App
 
-1. Durch die Datei Procfile wird der Web-Server beim Upload auf Herokua automatisch gestartet.
+1. Durch die Datei Procfile wird der Web-Server beim Upload auf Heroku automatisch gestartet.
 2. Anschließend können die Webseiten im Browser aufgerufen werden, um mit den beiden Learning-Companions in Dialogflow zu kommunizieren.
 ```bash
 # Learning-Companion mit niedriger Machtdistanz.
